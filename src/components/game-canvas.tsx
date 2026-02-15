@@ -15,7 +15,6 @@ export function GameCanvas() {
       if (phase === "title" || phase === "gameover" || phase === "clear") {
         e.preventDefault();
         inputRef.current.keys.add(" ");
-        // Remove after one frame so the engine picks it up once
         requestAnimationFrame(() => {
           inputRef.current.keys.delete(" ");
         });
@@ -25,12 +24,12 @@ export function GameCanvas() {
   );
 
   return (
-    <div className="relative select-none">
+    <div className="flex flex-col items-center select-none w-full max-w-[480px]">
       <canvas
         ref={canvasRef}
         width={CANVAS_WIDTH}
         height={CANVAS_HEIGHT}
-        className="border-2 border-gray-700 rounded-lg shadow-2xl max-w-full h-auto block"
+        className="border-2 border-gray-700 rounded-lg shadow-2xl w-full h-auto block"
         style={{ imageRendering: "pixelated" }}
         onTouchStart={handleCanvasTap}
       />

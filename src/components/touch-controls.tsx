@@ -8,8 +8,9 @@ type Props = {
 };
 
 /**
- * Virtual D-pad (left/right) + Fire button overlay.
- * Only visible on touch devices.
+ * Touch controls rendered BELOW the canvas.
+ * Left/Right on the left side, FIRE on the right side.
+ * Hidden on desktop via CSS media query.
  */
 export function TouchControls({ inputRef }: Props) {
   const leftRef = useRef<HTMLButtonElement>(null);
@@ -31,9 +32,7 @@ export function TouchControls({ inputRef }: Props) {
   );
 
   useEffect(() => {
-    // Prevent context menu on long-press
     const prevent = (e: Event) => e.preventDefault();
-
     const els = [leftRef.current, rightRef.current, fireRef.current];
     for (const el of els) {
       el?.addEventListener("contextmenu", prevent);
@@ -46,60 +45,62 @@ export function TouchControls({ inputRef }: Props) {
   }, []);
 
   const btnBase =
-    "absolute flex items-center justify-center rounded-full bg-white/15 active:bg-white/30 backdrop-blur-sm border border-white/20 text-white font-bold select-none touch-none transition-colors pointer-events-auto";
+    "flex items-center justify-center rounded-2xl bg-white/10 active:bg-white/25 border border-white/20 text-white font-bold select-none touch-none transition-colors";
 
   return (
-    <div className="absolute inset-0 pointer-events-none touch-pad-container">
-      {/* Left button */}
-      <button
-        ref={leftRef}
-        className={`${btnBase} bottom-4 left-4 w-16 h-16 text-2xl`}
-        onTouchStart={(e) => {
-          e.preventDefault();
-          press("ArrowLeft");
-        }}
-        onTouchEnd={(e) => {
-          e.preventDefault();
-          release("ArrowLeft");
-        }}
-        onTouchCancel={() => release("ArrowLeft")}
-      >
-        ◀
-      </button>
+    <div className="touch-pad-container w-full mt-3 px-2">
+      <div className="flex items-center justify-between gap-4">
+        {/* D-pad: left / right */}
+        <div className="flex gap-3">
+          <button
+            ref={leftRef}
+            className={`${btnBase} w-20 h-20 text-3xl`}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              press("ArrowLeft");
+            }}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              release("ArrowLeft");
+            }}
+            onTouchCancel={() => release("ArrowLeft")}
+          >
+            ◀
+          </button>
+          <button
+            ref={rightRef}
+            className={`${btnBase} w-20 h-20 text-3xl`}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              press("ArrowRight");
+            }}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              release("ArrowRight");
+            }}
+            onTouchCancel={() => release("ArrowRight")}
+          >
+            ▶
+          </button>
+        </div>
 
-      {/* Right button */}
-      <button
-        ref={rightRef}
-        className={`${btnBase} bottom-4 left-24 w-16 h-16 text-2xl`}
-        onTouchStart={(e) => {
-          e.preventDefault();
-          press("ArrowRight");
-        }}
-        onTouchEnd={(e) => {
-          e.preventDefault();
-          release("ArrowRight");
-        }}
-        onTouchCancel={() => release("ArrowRight")}
-      >
-        ▶
-      </button>
-
-      {/* Fire button */}
-      <button
-        ref={fireRef}
-        className={`${btnBase} bottom-4 right-4 w-20 h-20 text-sm tracking-wider bg-red-500/30 active:bg-red-500/50 border-red-400/40`}
-        onTouchStart={(e) => {
-          e.preventDefault();
-          press(" ");
-        }}
-        onTouchEnd={(e) => {
-          e.preventDefault();
-          release(" ");
-        }}
-        onTouchCancel={() => release(" ")}
-      >
-        FIRE
-      </button>
+        {/* Fire button */}
+        <button
+          ref={fireRef}
+          className={`${btnBase} w-24 h-24 text-base tracking-widest bg-red-600/30 active:bg-red-500/50 border-red-400/40`}
+          onTouchStart={(e) => {
+            e.preventDefault();
+            press(" ");
+          }}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            release(" ");
+          }}
+          onTouchCancel={() => release(" ")}
+        >
+          FIRE
+        </button>
+      </div>
     </div>
   );
 }
