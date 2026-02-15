@@ -29,9 +29,8 @@ export function useGame(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
     // Load assets
     assetsRef.current = loadAssets();
 
-    // Input handlers
+    // Keyboard handlers
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Prevent page scroll on arrow keys and space
       if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", " "].includes(e.key)) {
         e.preventDefault();
       }
@@ -54,4 +53,6 @@ export function useGame(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
       window.removeEventListener("keyup", handleKeyUp);
     };
   }, [gameLoop]);
+
+  return inputRef;
 }
