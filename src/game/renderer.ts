@@ -350,7 +350,7 @@ function drawTitleScreen(ctx: CanvasRenderingContext2D, state: GameState): void 
   if (Math.floor(state.frame / 30) % 2 === 0) {
     ctx.fillStyle = "#00e5ff";
     ctx.font = "bold 22px 'Segoe UI', sans-serif";
-    ctx.fillText("PRESS SPACE TO START", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 60);
+    ctx.fillText("TAP OR PRESS SPACE TO START", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 60);
   }
 
   ctx.font = "14px 'Segoe UI', sans-serif";
@@ -381,7 +381,7 @@ function drawGameOverScreen(ctx: CanvasRenderingContext2D, state: GameState): vo
   if (Math.floor(state.frame / 30) % 2 === 0) {
     ctx.fillStyle = "#00e5ff";
     ctx.font = "bold 20px 'Segoe UI', sans-serif";
-    ctx.fillText("PRESS SPACE TO RETRY", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 90);
+    ctx.fillText("TAP OR PRESS SPACE TO RETRY", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 90);
   }
   ctx.textAlign = "left";
 }
@@ -417,7 +417,7 @@ function drawClearScreen(ctx: CanvasRenderingContext2D, state: GameState): void 
   if (Math.floor(state.frame / 30) % 2 === 0) {
     ctx.fillStyle = "#00e5ff";
     ctx.font = "bold 20px 'Segoe UI', sans-serif";
-    ctx.fillText("PRESS SPACE TO PLAY AGAIN", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 110);
+    ctx.fillText("TAP OR PRESS SPACE TO PLAY AGAIN", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 110);
   }
   ctx.textAlign = "left";
 }

@@ -1,13 +1,28 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import { useGame } from "@/hooks/use-game";
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from "@/game/constants";
 import { TouchControls } from "./touch-controls";
 
 export function GameCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const inputRef = useGame(canvasRef);
+  const { inputRef, stateRef } = useGame(canvasRef);
+
+  const handleCanvasTap = useCallback(
+    (e: React.TouchEvent) => {
+      const phase = stateRef.current.phase;
+      if (phase === "title" || phase === "gameover" || phase === "clear") {
+        e.preventDefault();
+        inputRef.current.keys.add(" ");
+        // Remove after one frame so the engine picks it up once
+        requestAnimationFrame(() => {
+          inputRef.current.keys.delete(" ");
+        });
+      }
+    },
+    [inputRef, stateRef]
+  );
 
   return (
     <div className="relative select-none">
@@ -17,6 +32,7 @@ export function GameCanvas() {
         height={CANVAS_HEIGHT}
         className="border-2 border-gray-700 rounded-lg shadow-2xl max-w-full h-auto block"
         style={{ imageRendering: "pixelated" }}
+        onTouchStart={handleCanvasTap}
       />
       <TouchControls inputRef={inputRef} />
     </div>

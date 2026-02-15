@@ -54,5 +54,5 @@ export function useGame(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
     };
   }, [gameLoop]);
 
-  return inputRef;
+  return { inputRef, stateRef };
 }
